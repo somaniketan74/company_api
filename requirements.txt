@@ -1,3 +1,4 @@
+whitenoise==3.2
 dj-database-url==0.4.1
 Django==1.11.4
 djangorestframework==3.6.3
