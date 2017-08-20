@@ -15,9 +15,12 @@ import uuid
 class companyView(generics.ListCreateAPIView):
     def get(self, request, *args, **kwargs):
         if 'profile_id' in request.query_params:
-            company_profile = Company.objects.get(profile_id=request.query_params['profile_id'])
-            serializer = CompanySerializer(company_profile)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
+            try:
+                company_profile = Company.objects.get(profile_id=request.query_params['profile_id'])
+                serializer = CompanySerializer(company_profile)
+                return Response(data=serializer.data, status=status.HTTP_200_OK)
+            except Company.DoesNotExist:
+                return Response(data={'Company not found'}, status=status.HTTP_200_OK)
         else:
             return Response(data={"id not found"}, status=status.HTTP_400_BAD_REQUEST)
 
